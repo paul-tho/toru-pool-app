@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { supabase } from '../App';
 import RiderSelect from './RiderSelect';
 import TeamSelect from './TeamSelect';
-import { RIDERS_2025 } from '../data/2026/riders.js';
-import { STAGES_2025 } from '../data/2026/stages.js';
+import { RIDERS_2025 } from '../data/2026/riders';
+import { STAGES_2025 } from '../data/2026/stages';
+import { calculateStandings, isTourFinished, calculateStagePoints } from '../utils/scoring';
 
 const emptyStage = (stage) => ({
     stage,
@@ -27,6 +30,7 @@ export default function AdminPanel({ setCurrentView, onSubmit }) {
     const [loading, setLoading] = useState(false);
     const [stageResults, setStageResults] = useState(emptyStage(1));
     const [allStages, setAllStages] = useState([]);
+    const [exporting, setExporting] = useState(false);
 
     useEffect(() => {
         if (isAuthed) loadStages();
@@ -38,6 +42,60 @@ export default function AdminPanel({ setCurrentView, onSubmit }) {
             .select('*')
             .order('stage', { ascending: true });
         if (data) setAllStages(data);
+    };
+
+    // PDF-export: haalt deelnemers op, berekent de stand en maakt een PDF
+    const exportPDF = async () => {
+        setExporting(true);
+        try {
+            const { data: participants, error } = await supabase
+                .from('participants')
+                .select('*');
+            if (error) throw error;
+
+            const standings = calculateStandings(participants || [], allStages);
+            const tourDone = isTourFinished(allStages);
+
+            // Etappes in oplopende volgorde voor de kolommen
+            const stagesSorted = [...allStages].sort((a, b) => a.stage - b.stage);
+
+            // Liggend formaat als er veel etappe-kolommen zijn (meer ruimte)
+            const doc = new jsPDF({
+                orientation: stagesSorted.length > 6 ? 'landscape' : 'portrait',
+            });
+            doc.setFontSize(20);
+            doc.text('Tour Poule - Klassement', 14, 22);
+            doc.setFontSize(10);
+            doc.text(`Bijgewerkt: ${new Date().toLocaleString('nl-NL')}`, 14, 30);
+
+            // Kolomkoppen: positie, naam, één kolom per etappe, dan de totalen
+            const stageHeaders = stagesSorted.map(s => `Et.${s.stage}`);
+            const columns = tourDone
+                ? ['Pos', 'Naam', ...stageHeaders, 'Top 10', 'Truien', 'Totaal']
+                : ['Pos', 'Naam', ...stageHeaders, 'Totaal'];
+
+            const body = standings.map((p, i) => {
+                const stageCells = stagesSorted.map(s => calculateStagePoints(p.riders, s));
+                return tourDone
+                    ? [i + 1, p.name, ...stageCells, p.topTenPoints, p.jerseyPoints, p.totalPoints]
+                    : [i + 1, p.name, ...stageCells, p.totalPoints];
+            });
+
+            autoTable(doc, {
+                head: [columns],
+                body,
+                startY: 40,
+                styles: { fontSize: 8, cellPadding: 2 },
+                headStyles: { fillColor: [255, 255, 0], textColor: [0, 0, 0] },
+                columnStyles: { 1: { halign: 'left' } },
+            });
+
+            doc.save(`tour-poule-klassement-${new Date().toISOString().split('T')[0]}.pdf`);
+        } catch (e) {
+            alert('Fout bij PDF maken: ' + e.message);
+        } finally {
+            setExporting(false);
+        }
     };
 
     const handleLogin = (password) => {
@@ -306,6 +364,32 @@ export default function AdminPanel({ setCurrentView, onSubmit }) {
                         </tbody>
                     </table>
                 )}
+            </div>
+
+            {/* PDF exporteren */}
+            <div style={card}>
+                <h3 style={{ ...heading, marginTop: 0 }}>Klassement exporteren</h3>
+                <p style={{ color: '#666', marginTop: 0 }}>
+                    Maak een PDF van het volledige klassement met de score per etappe.
+                </p>
+                <button
+                    onClick={exportPDF}
+                    disabled={exporting}
+                    style={{
+                        marginTop: '16px',
+                        padding: '14px 24px',
+                        backgroundColor: '#EF3340',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '0px',
+                        cursor: exporting ? 'not-allowed' : 'pointer',
+                        fontWeight: '700',
+                        textTransform: 'uppercase',
+                        letterSpacing: '1px',
+                    }}
+                >
+                    {exporting ? 'Bezig met maken...' : '📥 Klassement als PDF exporteren'}
+                </button>
             </div>
         </div>
     );

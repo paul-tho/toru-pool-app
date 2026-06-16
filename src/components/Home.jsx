@@ -101,7 +101,7 @@ export default function Home({ setCurrentView }) {
                             e.target.style.transform = 'translateY(0)';
                         }}
                     >
-                        📝 VUL JE TOP 10 IN
+                        VUL JE TOP 10 IN
                     </button>
 
                     {/* Button 2 - Red */}
@@ -132,7 +132,7 @@ export default function Home({ setCurrentView }) {
                             e.target.style.transform = 'translateY(0)';
                         }}
                     >
-                        🏆 BEKIJK KLASSEMENT
+                        BEKIJK KLASSEMENT
                     </button>
 
                     {/* Button 3 - Black */}
@@ -163,7 +163,7 @@ export default function Home({ setCurrentView }) {
                             e.target.style.transform = 'translateY(0)';
                         }}
                     >
-                        ⚙️ BEHEERDERSPANEEL
+                        BEHEERDERSPANEEL
                     </button>
                 </div>
 
