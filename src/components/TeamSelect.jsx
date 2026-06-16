@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TEAMS_2025 } from '../data/teams';
+import { TEAMS_2025 } from '../data/2026/teams.js';
 
 export default function TeamSelect({ value, onChange, label }) {
     const [search, setSearch] = useState('');

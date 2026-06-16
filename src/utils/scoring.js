@@ -1,5 +1,5 @@
-import { RIDERS_2025 } from '../data/riders';
-import { TEAMS_2025 } from '../data/teams';
+import { RIDERS_2025 } from '../data/2026/riders.js';
+import { TEAMS_2025 } from '../data/2026/teams.js';
 
 // Configuration - easy to change
 export const POINTS_CONFIG = {

@@ -180,7 +180,7 @@ export default function Home({ setCurrentView }) {
                         🚴 LE GRAND BOUCLE 2025 🚴
                     </p>
                     <p style={{ margin: '8px 0 0 0' }}>
-                        Rechten van deze app beheert door familie de leeuw©
+                        © 2026 Familie de Leeuw — Alle rechten voorbehouden
                     </p>
                 </div>
             </div>
