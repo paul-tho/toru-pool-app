@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { supabase } from '../App';
 import RiderSelect from './RiderSelect';
 import TeamSelect from './TeamSelect';
+import NavButton from './NavButton';
 
 // === Pas deze waardes later aan ===
 const TIKKIE_LINK = 'https://tikkie.me/pay/pj3l9p5astpsptq72lbi';
@@ -71,9 +72,7 @@ export default function SubmitForm({ setCurrentView, onSubmit }) {
     if (closed) {
         return (
             <div style={{ maxWidth: '700px', margin: '0 auto', padding: '20px' }}>
-                <button onClick={() => setCurrentView('home')} style={{ marginBottom: '20px' }}>
-                    ← Terug
-                </button>
+                <NavButton onClick={() => setCurrentView('home')}>← Terug</NavButton>
                 <div style={{
                     backgroundColor: '#FFFBEA',
                     border: '2px solid #FFD700',
@@ -111,9 +110,7 @@ export default function SubmitForm({ setCurrentView, onSubmit }) {
 
     return (
         <div style={{ maxWidth: '700px', margin: '0 auto', padding: '20px' }}>
-            <button onClick={() => setCurrentView('home')} style={{ marginBottom: '20px' }}>
-                ← Terug
-            </button>
+            <NavButton onClick={() => setCurrentView('home')}>← Terug</NavButton>
             <h2>Vul je top 10 renners in</h2>
 
             <div style={{ marginBottom: '20px' }}>
@@ -147,6 +144,7 @@ export default function SubmitForm({ setCurrentView, onSubmit }) {
                             setFormData({ ...formData, riders: newRiders });
                         }}
                         label={`#${i + 1}`}
+                        exclude={formData.riders.filter(r => r)}
                     />
                 ))}
             </div>

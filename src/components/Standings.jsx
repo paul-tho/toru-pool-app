@@ -1,4 +1,5 @@
 import { useState, Fragment } from 'react';
+import NavButton from './NavButton';
 import { calculateStandings, isTourFinished, calculateStageBreakdown } from '../utils/scoring';
 
 export default function Standings({ setCurrentView, participants, dailyResults }) {
@@ -21,9 +22,7 @@ export default function Standings({ setCurrentView, participants, dailyResults }
 
     return (
         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
-            <button onClick={() => setCurrentView('home')} style={{ marginBottom: '20px' }}>
-                ← Terug
-            </button>
+            <NavButton onClick={() => setCurrentView('home')}>← Terug</NavButton>
             <h2>📊 Huidig klassement</h2>
 
             {!tourDone && (

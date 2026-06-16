@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { RIDERS_2025 } from '../data/2026/riders.js';
-import { TEAMS_2025 } from '../data/2026/teams.js';
+import { RIDERS_2025 } from '../data/2026/riders';
+import { TEAMS_2025 } from '../data/2026/teams';
 
-export default function RiderSelect({ value, onChange, label }) {
+export default function RiderSelect({ value, onChange, label, exclude = [] }) {
     const [search, setSearch] = useState('');
     const [open, setOpen] = useState(false);
 
@@ -15,9 +15,10 @@ export default function RiderSelect({ value, onChange, label }) {
     // The currently selected rider (if any)
     const selectedRider = RIDERS_2025.find(r => r.id === value);
 
-    // Filter riders by search term (only when nothing selected yet)
+    // Filter riders by search term, en verberg al gekozen renners (behalve de eigen keuze)
     const filtered = RIDERS_2025.filter(r =>
-        r.name.toLowerCase().includes(search.toLowerCase())
+        r.name.toLowerCase().includes(search.toLowerCase()) &&
+        (!exclude.includes(r.id) || r.id === value)
     );
 
     return (

@@ -4,6 +4,7 @@ import autoTable from 'jspdf-autotable';
 import { supabase } from '../App';
 import RiderSelect from './RiderSelect';
 import TeamSelect from './TeamSelect';
+import NavButton from './NavButton';
 import { RIDERS_2025 } from '../data/2026/riders';
 import { STAGES_2025 } from '../data/2026/stages';
 import { calculateStandings, isTourFinished, calculateStagePoints } from '../utils/scoring';
@@ -185,9 +186,7 @@ export default function AdminPanel({ setCurrentView, onSubmit }) {
     if (!isAuthed) {
         return (
             <div style={{ maxWidth: '420px', margin: '80px auto', padding: '20px' }}>
-                <button onClick={() => setCurrentView('home')} style={{ marginBottom: '20px' }}>
-                    ← Terug
-                </button>
+                <NavButton onClick={() => setCurrentView('home')}>← Terug</NavButton>
                 <div style={card}>
                     <h2 style={{ ...heading, marginTop: 0, color: '#1a1a1a' }}>Beheerder inloggen</h2>
                     <input
@@ -218,9 +217,7 @@ export default function AdminPanel({ setCurrentView, onSubmit }) {
     // ---- Admin scherm ----
     return (
         <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-            <button onClick={() => { setCurrentView('home'); setIsAuthed(false); }} style={{ marginBottom: '20px' }}>
-                ← Uitloggen
-            </button>
+            <NavButton onClick={() => { setCurrentView('home'); setIsAuthed(false); }}>← Uitloggen</NavButton>
 
             <h2 style={{ ...heading, color: '#1a1a1a' }}>
                 ⚙️ Beheer — Etappe-uitslag
@@ -278,6 +275,7 @@ export default function AdminPanel({ setCurrentView, onSubmit }) {
                             setStageResults({ ...stageResults, top_10_riders: newTop10 });
                         }}
                         label={`Positie ${i + 1}`}
+                        exclude={stageResults.top_10_riders.filter(r => r)}
                     />
                 ))}
 
@@ -376,7 +374,6 @@ export default function AdminPanel({ setCurrentView, onSubmit }) {
                     onClick={exportPDF}
                     disabled={exporting}
                     style={{
-                        marginTop: '16px',
                         padding: '14px 24px',
                         backgroundColor: '#EF3340',
                         color: '#fff',
