@@ -17,17 +17,6 @@ export default function Background() {
                 background: 'linear-gradient(180deg, #FFFFFF 0%, #FFF9E6 30%, #FFE680 100%)',
             }} />
 
-            {/* Top stripe - Official Tour Red */}
-            <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '8px',
-                background: '#EF3340',
-                zIndex: 1,
-            }} />
-
             {/* SVG Pattern - Mountain silhouettes */}
             <svg
                 style={{

@@ -1,23 +1,15 @@
 import { useState } from 'react';
-import { RIDERS_2025 } from '../data/riders';
 import { TEAMS_2025 } from '../data/teams';
 
-export default function RiderSelect({ value, onChange, label }) {
+export default function TeamSelect({ value, onChange, label }) {
     const [search, setSearch] = useState('');
     const [open, setOpen] = useState(false);
 
-    // Find the team name for a given rider
-    const getTeamName = (teamId) => {
-        const team = TEAMS_2025.find(t => t.id === teamId);
-        return team ? team.name : '';
-    };
+    // value is the team name (string) stored in team_classification
+    const selectedTeam = TEAMS_2025.find(t => t.name === value);
 
-    // The currently selected rider (if any)
-    const selectedRider = RIDERS_2025.find(r => r.id === value);
-
-    // Filter riders by search term (only when nothing selected yet)
-    const filtered = RIDERS_2025.filter(r =>
-        r.name.toLowerCase().includes(search.toLowerCase())
+    const filtered = TEAMS_2025.filter(t =>
+        t.name.toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -26,8 +18,7 @@ export default function RiderSelect({ value, onChange, label }) {
                 {label}
             </label>
 
-            {selectedRider ? (
-                // Show selected rider with team + clear button
+            {selectedTeam ? (
                 <div style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -37,12 +28,7 @@ export default function RiderSelect({ value, onChange, label }) {
                     borderRadius: '4px',
                     backgroundColor: '#FFFBEA',
                 }}>
-          <span>
-            <strong>{selectedRider.name}</strong>
-            <span style={{ color: '#666', marginLeft: '8px', fontSize: '13px' }}>
-              {getTeamName(selectedRider.teamId)}
-            </span>
-          </span>
+                    <strong>{selectedTeam.name}</strong>
                     <button
                         onClick={() => {
                             onChange('');
@@ -62,7 +48,6 @@ export default function RiderSelect({ value, onChange, label }) {
                     </button>
                 </div>
             ) : (
-                // Show search input
                 <>
                     <input
                         type="text"
@@ -70,7 +55,7 @@ export default function RiderSelect({ value, onChange, label }) {
                         onChange={(e) => setSearch(e.target.value)}
                         onFocus={() => setOpen(true)}
                         onBlur={() => setTimeout(() => setOpen(false), 150)}
-                        placeholder="Zoek renner..."
+                        placeholder="Zoek team..."
                         style={{
                             width: '100%',
                             padding: '10px 12px',
@@ -93,11 +78,11 @@ export default function RiderSelect({ value, onChange, label }) {
                             zIndex: 20,
                             boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                         }}>
-                            {filtered.map(rider => (
+                            {filtered.map(team => (
                                 <div
-                                    key={rider.id}
+                                    key={team.id}
                                     onMouseDown={() => {
-                                        onChange(rider.id);
+                                        onChange(team.name);
                                         setSearch('');
                                         setOpen(false);
                                     }}
@@ -105,16 +90,11 @@ export default function RiderSelect({ value, onChange, label }) {
                                         padding: '10px 12px',
                                         cursor: 'pointer',
                                         borderBottom: '1px solid #eee',
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
                                     }}
                                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#FFFBEA'}
                                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
                                 >
-                                    <span>{rider.name}</span>
-                                    <span style={{ color: '#888', fontSize: '13px' }}>
-                    {getTeamName(rider.teamId)}
-                  </span>
+                                    {team.name}
                                 </div>
                             ))}
                         </div>
