@@ -4,6 +4,7 @@ import Home from './components/Home';
 import SubmitForm from './components/SubmitForm';
 import Standings from './components/Standings';
 import AdminPanel from './components/AdminPanel';
+import Background from "./assets/background.jsx";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -33,6 +34,8 @@ export default function App() {
 
     return (
         <div>
+            <Background />
+
             {currentView === 'home' && (
                 <Home setCurrentView={setCurrentView} />
             )}

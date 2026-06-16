@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { supabase } from '../App';
-import { RIDERS_2025 } from '../data/riders';
 import RiderSelect from './RiderSelect';
 
 export default function SubmitForm({ setCurrentView, onSubmit }) {
@@ -16,11 +15,11 @@ export default function SubmitForm({ setCurrentView, onSubmit }) {
 
     const handleSubmit = async () => {
         if (!formData.name.trim()) {
-            alert('Please enter your name');
+            alert('Vul je naam in');
             return;
         }
         if (formData.riders.filter(r => r).length !== 10) {
-            alert('Please select exactly 10 riders');
+            alert('Selecteer precies 10 renners');
             return;
         }
 
@@ -28,10 +27,10 @@ export default function SubmitForm({ setCurrentView, onSubmit }) {
         try {
             const { error } = await supabase.from('participants').insert([formData]);
             if (error) throw error;
-            alert('Submission successful!');
+            alert('Inzending gelukt!');
             onSubmit();
         } catch (error) {
-            alert('Error: ' + error.message);
+            alert('Fout: ' + error.message);
         } finally {
             setLoading(false);
         }
@@ -40,23 +39,23 @@ export default function SubmitForm({ setCurrentView, onSubmit }) {
     return (
         <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
             <button onClick={() => setCurrentView('home')} style={{ marginBottom: '20px' }}>
-                ← Back
+                ← Terug
             </button>
-            <h2>Submit Your Top 10 Riders</h2>
+            <h2>Vul je top 10 renners in</h2>
 
             <div style={{ marginBottom: '20px' }}>
-                <label>Your Name:</label>
+                <label>Je naam:</label>
                 <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Enter your name"
+                    placeholder="Vul je naam in"
                     style={{ width: '100%', padding: '10px', marginTop: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
                 />
             </div>
 
             <div style={{ marginBottom: '20px' }}>
-                <h3>Your Top 10 Riders</h3>
+                <h3>Je top 10 renners</h3>
                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => (
                     <RiderSelect
                         key={i}
@@ -72,29 +71,29 @@ export default function SubmitForm({ setCurrentView, onSubmit }) {
             </div>
 
             <div style={{ marginBottom: '20px', backgroundColor: '#f5f5f5', padding: '20px', borderRadius: '8px' }}>
-                <h3>Jersey & Team Predictions</h3>
+                <h3>Trui- en teamvoorspellingen</h3>
                 <RiderSelect
                     value={formData.yellow_jersey}
                     onChange={(id) => setFormData({ ...formData, yellow_jersey: id })}
-                    label="Yellow Jersey (GC)"
+                    label="Gele Trui (Algemeen klassement)"
                 />
                 <RiderSelect
                     value={formData.polka_dots_jersey}
                     onChange={(id) => setFormData({ ...formData, polka_dots_jersey: id })}
-                    label="Polka Dots Jersey (Mountains)"
+                    label="Bolletjestrui (Bergklassement)"
                 />
                 <RiderSelect
                     value={formData.green_jersey}
                     onChange={(id) => setFormData({ ...formData, green_jersey: id })}
-                    label="Green Jersey (Sprint)"
+                    label="Groene Trui (Sprintklassement)"
                 />
                 <div style={{ marginTop: '10px' }}>
-                    <label>Team Classification:</label>
+                    <label>Teamklassement:</label>
                     <input
                         type="text"
                         value={formData.team_classification}
                         onChange={(e) => setFormData({ ...formData, team_classification: e.target.value })}
-                        placeholder="Enter team name"
+                        placeholder="Vul teamnaam in"
                         style={{ width: '100%', padding: '8px', marginTop: '4px', borderRadius: '4px', border: '1px solid #ccc' }}
                     />
                 </div>
@@ -114,7 +113,7 @@ export default function SubmitForm({ setCurrentView, onSubmit }) {
                     fontWeight: 'bold',
                 }}
             >
-                {loading ? 'Submitting...' : 'Submit'}
+                {loading ? 'Bezig met verzenden...' : 'Verzenden'}
             </button>
         </div>
     );

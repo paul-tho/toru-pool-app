@@ -9,12 +9,12 @@ export default function Standings({ setCurrentView, participants, dailyResults }
         const doc = new jsPDF();
 
         doc.setFontSize(20);
-        doc.text('Tour de France Pool - Standings', 14, 22);
+        doc.text('Tour Poule - Klassement', 14, 22);
 
         doc.setFontSize(10);
-        doc.text(`Updated: ${new Date().toLocaleString()}`, 14, 30);
+        doc.text(`Bijgewerkt: ${new Date().toLocaleString('nl-NL')}`, 14, 30);
 
-        const columns = ['Position', 'Name', 'Top 10 Pts', 'Jersey Pts', 'Total'];
+        const columns = ['Positie', 'Naam', 'Top 10 pnt', 'Trui pnt', 'Totaal'];
         const data = standings.map((p, i) => [
             i + 1,
             p.name,
@@ -30,18 +30,18 @@ export default function Standings({ setCurrentView, participants, dailyResults }
             headStyles: { fillColor: [255, 255, 0], textColor: [0, 0, 0] },
         });
 
-        doc.save(`tour-pool-standings-${new Date().toISOString().split('T')[0]}.pdf`);
+        doc.save(`tour-poule-klassement-${new Date().toISOString().split('T')[0]}.pdf`);
     };
 
     return (
         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
             <button onClick={() => setCurrentView('home')} style={{ marginBottom: '20px' }}>
-                ← Back
+                ← Terug
             </button>
-            <h2>📊 Current Standings</h2>
+            <h2>📊 Huidig klassement</h2>
 
             {standings.length === 0 ? (
-                <p>No data yet</p>
+                <p>Nog geen gegevens</p>
             ) : (
                 <>
                     <table style={{
@@ -53,11 +53,11 @@ export default function Standings({ setCurrentView, participants, dailyResults }
                     }}>
                         <thead>
                         <tr style={{ backgroundColor: '#FFD700' }}>
-                            <th style={{ padding: '12px', textAlign: 'left' }}>Position</th>
-                            <th style={{ padding: '12px', textAlign: 'left' }}>Name</th>
+                            <th style={{ padding: '12px', textAlign: 'left' }}>Positie</th>
+                            <th style={{ padding: '12px', textAlign: 'left' }}>Naam</th>
                             <th style={{ padding: '12px', textAlign: 'right' }}>Top 10</th>
-                            <th style={{ padding: '12px', textAlign: 'right' }}>Jersey</th>
-                            <th style={{ padding: '12px', textAlign: 'right' }}>Total</th>
+                            <th style={{ padding: '12px', textAlign: 'right' }}>Truien</th>
+                            <th style={{ padding: '12px', textAlign: 'right' }}>Totaal</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -84,7 +84,7 @@ export default function Standings({ setCurrentView, participants, dailyResults }
                         onClick={exportPDF}
                         style={{
                             padding: '12px 24px',
-                            backgroundColor: '#FF6B6B',
+                            backgroundColor: '#EF3340',
                             color: '#fff',
                             border: 'none',
                             borderRadius: '8px',
@@ -92,7 +92,7 @@ export default function Standings({ setCurrentView, participants, dailyResults }
                             fontWeight: 'bold',
                         }}
                     >
-                        📥 Export as PDF
+                        📥 Exporteer als PDF
                     </button>
                 </>
             )}
