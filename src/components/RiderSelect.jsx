@@ -78,6 +78,7 @@ export default function RiderSelect({ value, onChange, label, exclude = [] }) {
                             border: '1px solid #ccc',
                             borderRadius: '4px',
                             boxSizing: 'border-box',
+                            fontSize: '16px',
                         }}
                     />
                     {open && filtered.length > 0 && (
