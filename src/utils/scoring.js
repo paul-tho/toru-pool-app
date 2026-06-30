@@ -1,5 +1,5 @@
-import { RIDERS_2025 } from '../data/2026/riders';
-import { TEAMS_2025 } from '../data/2026/teams';
+import { RIDERS_2026 } from '../data/2026/riders.js';
+import { TEAMS_2026 } from '../data/2026/teams.js';
 
 // Configuratie - eenvoudig aan te passen
 export const POINTS_CONFIG = {
@@ -121,9 +121,9 @@ export const isTourFinished = (dailyResults) =>
  * Renner-info ophalen (naam + team)
  */
 export const getRiderInfo = (riderId) => {
-    const rider = RIDERS_2025.find(r => r.id === riderId);
+    const rider = RIDERS_2026.find(r => r.id === riderId);
     if (!rider) return null;
-    const team = TEAMS_2025.find(t => t.id === rider.teamId);
+    const team = TEAMS_2026.find(t => t.id === rider.teamId);
     return { rider, team };
 };
 
@@ -131,7 +131,7 @@ export const getRiderInfo = (riderId) => {
  * Team-info ophalen op id
  */
 export const getTeamInfo = (teamId) => {
-    return TEAMS_2025.find(t => t.id === teamId);
+    return TEAMS_2026.find(t => t.id === teamId);
 };
 
 /**

@@ -1,5 +1,5 @@
 // Alle etappes van de Tour 2025 (rustdagen niet opgenomen, die hebben geen uitslag)
-export const STAGES_2025 = [
+export const STAGES_2026 = [
     { stage: 1, date: '4-7', route: 'Barcelona - Barcelona' },
     { stage: 2, date: '5-7', route: 'Tarragona - Barcelona' },
     { stage: 3, date: '6-7', route: 'Granollers - Les Angles' },

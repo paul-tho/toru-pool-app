@@ -5,8 +5,8 @@ import { supabase } from '../App';
 import RiderSelect from './RiderSelect';
 import TeamSelect from './TeamSelect';
 import NavButton from './NavButton';
-import { RIDERS_2025 } from '../data/2026/riders';
-import { STAGES_2025 } from '../data/2026/stages';
+import { RIDERS_2026 } from '../data/2026/riders.js';
+import { STAGES_2026 } from '../data/2026/stages';
 import { calculateStandings, isTourFinished, calculateStagePoints } from '../utils/scoring';
 
 const emptyStage = (stage) => ({
@@ -19,11 +19,11 @@ const emptyStage = (stage) => ({
 });
 
 const riderName = (id) => {
-    const r = RIDERS_2025.find(x => x.id === id);
+    const r = RIDERS_2026.find(x => x.id === id);
     return r ? r.name : '—';
 };
 
-const stageInfo = (num) => STAGES_2025.find(s => s.stage === num);
+const stageInfo = (num) => STAGES_2026.find(s => s.stage === num);
 
 export default function AdminPanel({ setCurrentView, onSubmit }) {
     const [isAuthed, setIsAuthed] = useState(false);
@@ -134,7 +134,7 @@ export default function AdminPanel({ setCurrentView, onSubmit }) {
 
             alert('Etappe-uitslag opgeslagen!');
             // Spring naar de volgende etappe die nog bestaat in de lijst
-            const next = STAGES_2025.find(s => s.stage === stageResults.stage + 1);
+            const next = STAGES_2026.find(s => s.stage === stageResults.stage + 1);
             setStageResults(emptyStage(next ? next.stage : stageResults.stage));
             await loadStages();
             onSubmit();
@@ -248,7 +248,7 @@ export default function AdminPanel({ setCurrentView, onSubmit }) {
                             fontSize: '15px',
                         }}
                     >
-                        {STAGES_2025.map(s => {
+                        {STAGES_2026.map(s => {
                             const done = allStages.some(a => a.stage === s.stage);
                             return (
                                 <option key={s.stage} value={s.stage}>

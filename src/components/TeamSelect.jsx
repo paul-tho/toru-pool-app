@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { TEAMS_2025 } from '../data/2026/teams.js';
+import { TEAMS_2026 } from '../data/2026/teams.js';
 
 export default function TeamSelect({ value, onChange, label }) {
     const [search, setSearch] = useState('');
     const [open, setOpen] = useState(false);
 
     // value is the team name (string) stored in team_classification
-    const selectedTeam = TEAMS_2025.find(t => t.name === value);
+    const selectedTeam = TEAMS_2026.find(t => t.name === value);
 
-    const filtered = TEAMS_2025.filter(t =>
+    const filtered = TEAMS_2026.filter(t =>
         t.name.toLowerCase().includes(search.toLowerCase())
     );
 

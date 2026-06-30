@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { RIDERS_2025 } from '../data/2026/riders';
-import { TEAMS_2025 } from '../data/2026/teams';
+import { RIDERS_2026 } from '../data/2026/riders.js';
+import { TEAMS_2026 } from '../data/2026/teams.js';
 
 export default function RiderSelect({ value, onChange, label, exclude = [] }) {
     const [search, setSearch] = useState('');
@@ -8,15 +8,15 @@ export default function RiderSelect({ value, onChange, label, exclude = [] }) {
 
     // Find the team name for a given rider
     const getTeamName = (teamId) => {
-        const team = TEAMS_2025.find(t => t.id === teamId);
+        const team = TEAMS_2026.find(t => t.id === teamId);
         return team ? team.name : '';
     };
 
     // The currently selected rider (if any)
-    const selectedRider = RIDERS_2025.find(r => r.id === value);
+    const selectedRider = RIDERS_2026.find(r => r.id === value);
 
     // Filter riders by search term, en verberg al gekozen renners (behalve de eigen keuze)
-    const filtered = RIDERS_2025.filter(r =>
+    const filtered = RIDERS_2026.filter(r =>
         r.name.toLowerCase().includes(search.toLowerCase()) &&
         (!exclude.includes(r.id) || r.id === value)
     );
