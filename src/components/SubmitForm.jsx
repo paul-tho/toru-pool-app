@@ -5,7 +5,7 @@ import TeamSelect from './TeamSelect';
 import NavButton from './NavButton';
 
 // === Pas deze waardes later aan ===
-const TIKKIE_LINK = 'https://tikkie.me/pay/pj3l9p5astpsptq72lbi';
+const TIKKIE_LINK = 'https://tikkie.me/pay/72d25ugcfiam3k315pg2';
 const INLEG_BEDRAG = '€5,00';
 // Deadline: Tour start 4 juli 2026 om 12:00 (maanden zijn 0-gebaseerd, dus 6 = juli)
 const DEADLINE = new Date(2026, 6, 4, 12, 0, 0);
