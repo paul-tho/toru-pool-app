@@ -128,6 +128,7 @@ export default function SubmitForm({ setCurrentView, onSubmit }) {
                         borderRadius: '4px',
                         border: '1px solid #ccc',
                         boxSizing: 'border-box',
+                        fontSize: '16px',
                     }}
                 />
             </div>
